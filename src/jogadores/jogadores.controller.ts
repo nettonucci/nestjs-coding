@@ -1,6 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CriarJogadorDto } from './dtos/criar-jogador.dto';
 
+@ApiTags('Jogadores')
 @Controller('api/v1/jogadores')
 export class JogadoresController {
 
