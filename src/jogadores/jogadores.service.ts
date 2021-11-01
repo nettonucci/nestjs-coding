@@ -12,8 +12,20 @@ export class JogadoresService {
 
     async criarAtualizarJogador(criarJogadorDto: CriarJogadorDto): Promise<void> {
 
-        await this.criar(criarJogadorDto)
+        const { email } = criarJogadorDto
 
+        const jogadorEncontrador = await this.jogadores.find(jogador => jogador.email === email)
+
+        if (jogadorEncontrador) {
+            this.atualizar(jogadorEncontrador, criarJogadorDto)
+        } else {
+            await this.criar(criarJogadorDto)
+        }
+
+    }
+
+    async consultarTodosJogadores(): Promise<Jogador[]> {
+        return await this.jogadores;
     }
 
     private criar(criaJogadorDto: CriarJogadorDto): void {
@@ -32,6 +44,12 @@ export class JogadoresService {
 
         this.jogadores.push(jogador);
 
+    }
+
+    private atualizar(jogadorEncontrador: Jogador, criarJogadorDto: CriarJogadorDto): void {
+        const { nome } = criarJogadorDto
+
+        jogadorEncontrador.nome = nome
     }
 
 
